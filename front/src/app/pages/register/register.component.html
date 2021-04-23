@@ -1,0 +1,9 @@
+<form class="form" (ngSubmit)="register()">
+  <p>Sign Up</p>
+  <input [(ngModel)]="user.username" name="name" placeholder="Username" type="text">
+  <input [(ngModel)]="user.password" name="password" placeholder="Password" type="password">
+  <input [(ngModel)]="password2" name="password2" placeholder="Repeat your password again" type="password">
+  <button type='submit'>Sign Up</button>
+  <p>You already have an acoont?</p>
+  <a routerLink="/login">Log In</a>
+</form>

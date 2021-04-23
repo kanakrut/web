@@ -1,0 +1,14 @@
+<div class="header">
+  <div class="nav main">
+    <a routerLink="/">Aliexpress</a>
+  </div>
+  <div *ngIf="logged" class="nav">
+    <a routerLink="/cart">My Cart</a>
+  </div>
+  <div class="nav right-side">
+    <a *ngIf="!logged" routerLink="/login">Log In</a>
+    <a *ngIf="!logged" routerLink="/register">Sign Up</a>
+    <a *ngIf="logged">{{user.username}}</a>
+    <a *ngIf="logged" (click)="logOut()">Logout</a>
+  </div>
+</div>
