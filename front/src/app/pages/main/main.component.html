@@ -5,6 +5,6 @@
     <img [src]="product.img" height="auto" width="100%" alt="">
     <p>{{product.description}}</p>
     <p>{{product.price}} тг.</p>
-    <button (click)="addToCart(product.id)" [disabled]="loading">Add to my cart</button>
+    <button (click)="addToCart(product)" [disabled]="loading">Add to my cart</button>
   </div>
 </div>

@@ -2,17 +2,15 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Cart} from '../models/Cart';
-import {Products} from '../models/Products';
 import {User} from '../models/User';
+import {Products} from '../models/Products';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private productsUrl = 'api/products';
-  private cartsUrl = 'api/carts';
-  private userUrl = 'api/users';
+  private baseUrl = 'http://127.0.0.1:8000';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,40 +20,27 @@ export class ApiService {
     private http: HttpClient,
   ) { }
 
-  /** GET heroes from the server */
-  getProduct(id): Observable<Products> {
-    return this.http.get<Products>(this.productsUrl + '/' + id);
-  }
-
   getProducts(): Observable<Products[]> {
-    return this.http.get<Products[]>(this.productsUrl);
+    return this.http.get<Products[]>(this.baseUrl + '/products/');
   }
 
-  getCards() {
-    return this.http.get(this.cartsUrl);
+  updateProduct(product): Observable<any> {
+    return this.http.put(this.baseUrl + '/product/' + product.id + '/', JSON.stringify(product), this.httpOptions);
   }
 
-  getCart(id: number): Observable<Cart> {
-    return this.http.get<Cart>(this.cartsUrl + '/' + id);
-  }
-
-  craateCart(cart) {
-    return this.http.post(this.cartsUrl, cart, this.httpOptions);
-  }
-
-  updateCart(cart: Cart): Observable<any> {
-    return this.http.put(this.cartsUrl + '/' + cart.id, cart, this.httpOptions);
-  }
-
-  login(username, password) {
-    return this.http.get<User>(this.userUrl + '?username=' + username + '&password=' + password);
+  createCard(userId): Observable<any> {
+    return this.http.post(this.baseUrl + '/carts/', {user: userId}, this.httpOptions);
   }
 
   register(user) {
-    return this.http.post(this.userUrl, user, this.httpOptions);
+    return this.http.post(this.baseUrl + '/users/', JSON.stringify(user), this.httpOptions);
   }
 
-  getUsers() {
-    return this.http.get(this.userUrl);
+  login(username, password) {
+    return this.http.post(this.baseUrl + '/logIn/', {username, password}, this.httpOptions);
+  }
+
+  getUserInfo() {
+    return this.http.get<User>(this.baseUrl + '/userInfo/');
   }
 }

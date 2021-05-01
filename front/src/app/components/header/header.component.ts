@@ -9,22 +9,16 @@ import {User} from '../../models/User';
 })
 export class HeaderComponent implements OnInit {
 
-  logged = this.userService.logged;
-  user = this.userService.user;
-
   constructor(
-    private userService: UserService
-  ) { }
+    public userService: UserService
+  ) {}
 
   ngOnInit(): void {
-    this.userService.changed.subscribe(val => {
-      this.logged = val;
-      this.user = this.userService.user;
-    });
   }
 
   logOut() {
     this.userService.user = new User();
     this.userService.toggle(false);
+    localStorage.removeItem('token');
   }
 }

@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private userService: UserService,
-    private errorService: ErrorService,
+    public errorService: ErrorService,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
@@ -29,21 +29,13 @@ export class RegisterComponent implements OnInit {
 
   register() {
     if (this.user.password === this.password2) {
-      this.apiService.getUsers().subscribe(users => {
-        this.user.id = Object.keys(users).length + 1;
-        this.apiService.register(this.user).subscribe(res => {
-          this.createCart();
-        }, error => this.errorService.setError(error));
+      this.apiService.register(this.user).subscribe(res => {
+        this.apiService.createCard(res['id']).subscribe(res2 => {
+          this.router.navigate(['/login']);
+        });
       });
     } else {
       this.errorService.setError('Passwords are not equal!');
     }
-  }
-
-  createCart() {
-      const cart = new Cart();
-      cart.id = this.user.id;
-      cart.user = this.user.id;
-      this.apiService.craateCart(cart).subscribe(res => this.router.navigate(['/login']));
   }
 }

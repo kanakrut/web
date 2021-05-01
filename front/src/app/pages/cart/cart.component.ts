@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {UserService} from '../../services/user.service';
 import {ErrorService} from '../../services/error.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Cart} from '../../models/Cart';
+import {Router} from '@angular/router';
+import {Products} from '../../models/Products';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +12,7 @@ import {Cart} from '../../models/Cart';
 })
 export class CartComponent implements OnInit {
 
-  cart = new Cart();
+  products: Products[] = []
   loading = false;
 
   constructor(
@@ -20,25 +20,37 @@ export class CartComponent implements OnInit {
     private userService: UserService,
     private errorService: ErrorService,
     private router: Router,
-    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    this.userService.changed.subscribe(val => {
+      if (!val) {
+        this.router.navigate(['/']);
+      }
+    })
     if (!this.userService.logged) {
       this.router.navigate(['/']);
     } else {
-      this.apiService.getCart(this.userService.user.id).subscribe(cart => {
-        this.cart = cart;
-      });
+      this.refresh();
     }
   }
 
-  delete(id) {
+  delete(product) {
     this.loading = true;
-    this.cart.products = this.cart.products.filter(value => value.id !== id);
-    this.apiService.updateCart(this.cart).subscribe(res => {
+    console.log(product.carts, this.userService.user.cart.id);
+    product.carts = product.carts.filter(cartId => cartId !== this.userService.user.cart.id);
+    console.log(product.carts);
+    this.apiService.updateProduct(product).subscribe(res => {
+      this.refresh();
       this.loading = false;
       alert('Deleted!');
+    });
+  }
+
+  refresh() {
+    this.apiService.getUserInfo().subscribe(user => {
+      this.userService.user = user;
+      this.products = this.userService.user.cart.products;
     });
   }
 }

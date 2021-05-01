@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import {User} from '../../models/User';
 import {UserService} from '../../services/user.service';
@@ -19,22 +19,18 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private errorService: ErrorService,
     private router: Router,
-    private route: ActivatedRoute,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
   }
 
   logIn() {
-    this.apiService.login(this.user.username, this.user.password).subscribe(user => {
-      if (Object.keys(user).length !== 0) {
-        this.user = user[0];
-        this.userService.user = this.user;
-        this.userService.toggle(true);
-        this.router.navigate(['/']);
-      } else {
-        this.errorService.setError('Wrong username or password');
-      }
+    this.apiService.login(this.user.username, this.user.password).subscribe(token => {
+      console.log(token);
+      localStorage.setItem('token', token.toString());
+      this.userService.toggle(true);
+      this.router.navigate(['/']);
     });
   }
 }

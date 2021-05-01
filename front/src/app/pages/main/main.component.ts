@@ -25,22 +25,18 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiService.getProducts().subscribe(products => {
+      console.log(products);
       this.products = products;
     });
   }
 
-  addToCart(id: number) {
+  addToCart(product) {
     this.loading = true;
     if (this.userService.logged) {
-      this.apiService.getCart(this.userService.user.id).subscribe(res => {
-        const cart: Cart = res;
-        this.apiService.getProduct(id).subscribe(product => {
-          cart.products.push(product);
-          this.apiService.updateCart(cart).subscribe(added => {
-            this.loading = false;
-            alert(product.title + ' was added to your cart!');
-          });
-        });
+      product.carts.push(this.userService.user.cart.id)
+      this.apiService.updateProduct(product).subscribe(res => {
+        this.loading = false;
+        alert(product.title + ' was added to your cart!');
       });
     } else {
       this.loading = false;
