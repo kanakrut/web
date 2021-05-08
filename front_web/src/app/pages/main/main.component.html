@@ -1,0 +1,10 @@
+<p class="title">Products</p>
+<div class="row">
+  <div *ngFor="let product of products" class="products">
+    <p class="title">{{product.title}}</p>
+    <img [src]="product.img" height="auto" width="100%" alt="">
+    <p>{{product.description}}</p>
+    <p>{{product.price}} тг.</p>
+    <a [routerLink]="'product/' + product.id">More</a>
+  </div>
+</div>

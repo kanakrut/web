@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="products">
+    <p class="title">{{product.title}}</p>
+    <img [src]="product.img" height="auto" width="100%" alt="">
+    <p>{{product.description}}</p>
+    <p>{{product.price}} тг.</p>
+    <button (click)="addToCart()" [disabled]="loading">Add to my cart</button>
+  </div>
+
+  <div class="write_comment">
+    <h4>Add comment</h4>
+    <textarea #message name="" id="" cols="30" rows="5"></textarea>
+    <button (click)="addComment(message.value)" type="button">Add</button>
+  </div>
+
+  <div class="comments_row">
+    <h4>Comments:</h4>
+    <div *ngFor="let comment of comments" class="comments">
+      <textarea #message cols="30" rows="5">{{comment.message}}</textarea>
+      <p>Автор: {{comment.user.username}}</p>
+      <div *ngIf="userService.user.id === comment.user.id">
+        <button (click)="updateComment(comment, message.value)" class="edit_button">Edit</button>
+        <button (click)="deleteComment(comment)" class="delete_button">Delete</button>
+      </div>
+    </div>
+    <p *ngIf="comments.length === 0">No comments</p>
+  </div>
+</div>

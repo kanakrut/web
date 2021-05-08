@@ -1,0 +1,86 @@
+.row {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+
+  .comments_row {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    .comments {
+      text-align: center;
+      border-top: 1px solid #000;
+      padding: 10px;
+
+      .edit_button {
+        background-color: #1976D2;
+        color: white;
+        padding: 10px;
+      }
+
+      .delete_button {
+        background-color: red;
+        color: white;
+        padding: 10px;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .write_comment {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+    margin: 10px auto 10px auto;
+    text-align: center;
+
+
+    textarea {
+      margin: 10px auto 10px auto;
+    }
+
+    button {
+      margin: 10px auto 10px auto;
+      background-color: #1976D2;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+    }
+  }
+
+  .products {
+    margin: 10px auto 10px auto;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    width: 30%;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      font-weight: bold;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    button {
+      background-color: #1976D2;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      text-align: right;
+      cursor: pointer;
+    }
+  }
+
+  .title {
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+

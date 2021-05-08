@@ -1,0 +1,27 @@
+.header {
+  background-color: #1976D2;
+  justify-content: space-between;
+  padding: 16px;
+  display: flex;
+
+  .nav a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  }
+
+  .right-side {
+    a {
+      margin-right: 10px;
+      margin-left: 10px;
+    }
+  }
+
+  .main {
+    font-weight: bold;
+  }
+}
